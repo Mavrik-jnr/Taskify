@@ -1,66 +1,28 @@
-let name: string;
-let age: number | string;
-let isStudent: boolean;
-let hobbies: string[];
-let role: [number, string];
+import InputField from "./components/InputField";
+import React, { useState } from "react";
+import { Todo } from "./model";
+import TodoList from "./components/TodoList";
+const App: React.FC = () => {
+  const [todo, setTodo] = useState<string>("");
+  const [todos, setTodos] = useState<Todo[]>([]);
 
-age = "ak";
-type Person = {
-  name: string;
-  age?: number;
+  const handleAdd = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (todo) {
+      setTodos([...todos, { id: Date.now(), todo: todo, isDone: false }]);
+      setTodo("");
+    }
+  };
+
+  return (
+    <div className="font-body bg-blue-200 h-screen pt-9 flex flex-col items-center">
+      <h1 className="text-center text-3xl md:text-6xl text-orange-600 uppercase z-30 mb-9 m">
+        Taskify
+      </h1>
+      <InputField todo={todo} setTodo={setTodo} handleAdd={handleAdd} />
+      <TodoList todos={todos} setTodos={setTodos} />
+    </div>
+  );
 };
-let person: Person = {
-  name: "kai",
-};
-
-let lotsOfPerson: Person[];
-
-role = [2, "KAI"];
-
-let printName: (name: string) => void;
-
-//object in type
-
-//Define the reusable type
-type mg = {
-  name: string;
-  heartSize: number;
-};
-// instantiate and declare a copy by extending type
-let me: mg;
-//Define copy, you can chain the above and below
-me = { name: "mahmoud", heartSize: 2 };
-//use copy
-console.log(me);
-
-interface obj {
-  name: string;
-  heartSize: number | boolean;
-}
-
-//type inheritance
-type X = {
-  a?: string;
-  b?: number;
-};
-type Y = X & {
-  c: boolean;
-  d: number;
-};
-
-let y: Y = {
-  c: true,
-  d: 3,
-};
-
-// interface inheritance
-interface objChild extends obj {
-  cool: boolean;
-}
-//inheritance
-
-function App() {
-  return <div className="">Hello world</div>;
-}
 
 export default App;
